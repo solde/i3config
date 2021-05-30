@@ -1,0 +1,17 @@
+w=$(wmctrl -lp | grep -i "$1")
+
+wid=""
+
+echo "$w" | while read line
+do
+    o="-_-$(echo "$line" | grep lof)-_-"
+    if [ "$o" == "-_--_-" ]
+    then
+        wid=$(echo "$line" | awk '{print $1}')
+        wmctrl -a "$(echo "$line" | awk '{print $2}"+1"' | bc )"
+        exit 0
+    fi
+    echo "loop $wid"
+done
+
+exit -1
